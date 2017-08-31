@@ -1,3 +1,39 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*,java.util.*,jsp.*,java.sql.*"%>
+
+<%
+
+	String email = request.getParameter("email");
+	String pass = request.getParameter("pass");
+	String redir = null;
+	
+	if(email == null || pass == null){
+		email = "";
+		pass = "";	
+	}else{
+		
+		Connection c = AWS.connect();
+		
+		if(c != null){
+			String id = AWS.selectUser(c, email, pass);
+			
+			if(id != ""){
+				session.setAttribute(Template.username, id);
+				AWS.close(c);
+				response.sendRedirect("index.jsp");
+			}else{
+				AWS.close(c);
+				response.sendRedirect("error.html");
+			}
+			
+		}
+		
+	}
+	
+	
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
