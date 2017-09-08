@@ -12,8 +12,8 @@ public class mkEntries {
 	public static void main(String[] args){
 	Connection c = AWS.connect(); 
 	
-	ArrayList<String> firstNames = getNames("firstnames.txt");
-	ArrayList<String> lastNames = getNames("lastnames.txt");
+	ArrayList<String> firstNames = getNames("src/jsp/firstnames.txt");
+	ArrayList<String> lastNames = getNames("src/jsp/lastnames.txt");
 	
 	Random rand = new Random();
 	int numUsers = 1;
