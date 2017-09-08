@@ -4,12 +4,18 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class mkEntries {
 	
-	public static void main(String[] args){
+	public static void main(String[] args){	
+		
 	Connection c = AWS.connect(); 
 	
 	ArrayList<String> firstNames = getNames("src/jsp/firstnames.txt");
@@ -20,7 +26,9 @@ public class mkEntries {
 	boolean isCustomer = true; 
 	
 	generateUser(c, firstNames, lastNames, numUsers, isCustomer);
+	generateFlight(c);
 	
+	System.out.println("Success");
 	}
 	
 	//Get Names -------------------------------
@@ -69,7 +77,7 @@ public class mkEntries {
 			//create system user 
 			try {
 				PreparedStatement ps = c.prepareStatement("INSERT INTO systemUser(user, password, email, telephone, firstName, lastName, city, zipcode, address, state) "
-														+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+														+ "VALUES (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, user); //user
 				ps.setString(2, ""+rand.nextInt(999999)); //password
 				ps.setString(3, first.charAt(0)+last+"@email.com"); //email
@@ -95,13 +103,22 @@ public class mkEntries {
 			if(isCustomer){	//create customer 
 				try {
 					PreparedStatement ps = 
-							c.prepareStatement("INSERT INTO systemUser(creditCardNum, accountNum, accountCreationDate, preferences, email) "
-							+ "VALUES (?,?,"+year+"-"+month+"-"+day+",?,?)", Statement.RETURN_GENERATED_KEYS);
+							c.prepareStatement("INSERT INTO customer(creditCardNum, accountNum, accountCreationDate, preferences, email) "
+							+ "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+					
 					ps.setInt(1, rand.nextInt(999999999)); //creditCardNum
 					ps.setInt(2, rand.nextInt(9999999)); //accountNum
-
-					//Date d = new Date(); 
-					//ps.setDate(3, d); //accountCreationDate
+					
+					Random random = new Random();
+					int minDay = (int) LocalDate.of(1990, 1, 1).toEpochDay();
+					int maxDay = (int) LocalDate.of(2010, 1, 1).toEpochDay();
+					long randomDay = minDay + random.nextInt(maxDay - minDay);
+					
+					LocalDate accountC = LocalDate.ofEpochDay(randomDay);
+					
+					Date d = Date.valueOf(accountC);
+					
+					ps.setDate(3, (java.sql.Date)d); //accountCreationDate
 					
 					ps.setString(4, "preferences" + rand.nextInt(999)); //preferences
 					ps.setString(5, first.charAt(0)+last+"@email.com"); //email
@@ -115,13 +132,21 @@ public class mkEntries {
 			}else{	//create employee
 				try {
 					PreparedStatement ps = 
-							c.prepareStatement("INSERT INTO systemUser(jobRole, hourlyRate, startDate, ssn, email) "
+							c.prepareStatement("INSERT INTO employee(jobRole, hourlyRate, startDate, ssn, email) "
 							+ "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 					ps.setInt(1, rand.nextInt(999999999)); //jobRole
 					ps.setFloat(2, rand.nextFloat() * (100.00f - 7.50f) + 7.50f); //hourlyRate
 
-					//Date d = new Date(); 
-					//ps.setDate(3, d); //startDate
+					Random random = new Random();
+					int minDay = (int) LocalDate.of(1990, 1, 1).toEpochDay();
+					int maxDay = (int) LocalDate.of(2010, 1, 1).toEpochDay();
+					long randomDay = minDay + random.nextInt(maxDay - minDay);
+					
+					LocalDate accountC = LocalDate.ofEpochDay(randomDay);
+					
+					Date d = Date.valueOf(accountC);
+					
+					ps.setDate(3, (java.sql.Date)d); //accountCreationDate
 					
 					ps.setString(4, "" + rand.nextInt(999999999)); //ssn
 					ps.setString(5, first.charAt(0)+last+"@email.com"); //email
@@ -188,28 +213,25 @@ public class mkEntries {
 		
 		//select airlines in operatedBy table '7:00:00 PM'
 		String[] airports = {"LGA", "NWA", "PSA", "TBA"}; 
-		String arrivalTime = generateTime();
-		String departureTime = generateTime();
-		String arriveOnTime = generateTime();
-		String departOnTime = generateTime(); 
-		
+		Time arrivalTime = generateSQLTime();
+		Time departureTime = generateSQLTime();
+		Time arriveOnTime = generateSQLTime();
+		Time departOnTime = generateSQLTime(); 
 		try { 
-			PreparedStatement ps = 
-					c.prepareStatement("INSERT INTO stopsAt(arrivalTime, departureTime, apid, flyNum, arriveOnTime, departOnTime)"
-							+ "VALUES ("+arrivalTime+","+departureTime+",?,?,"+arriveOnTime+","+departOnTime+")", Statement.RETURN_GENERATED_KEYS);
-			//ps.setTime(1, );//arrivalTime
-			//ps.setTime(2, flyNum);//departureTime
-			ps.setString(3, airports[rand.nextInt(3)]);//apid
-			ps.setInt(4, flyNum);//flyNum
-			//ps.setTime(5, airports[rand.nextInt(3)]);//arriveOnTime
-			//ps.setTime(6, flyNum);//departOnTime
+		PreparedStatement ps = 
+		c.prepareStatement("INSERT INTO stopsAt(arrivalTime, departureTime, apid, flyNum, arriveOnTime, departOnTime)"
+		+ "VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+		ps.setTime(1, arrivalTime);//arrivalTime
+		ps.setTime(2, departureTime);//departureTime
+		ps.setString(3, airports[rand.nextInt(3)]);//apid
+		ps.setInt(4, flyNum);//flyNum
+		ps.setTime(5, arriveOnTime);//arriveOnTime
+		ps.setTime(6, departOnTime);//departOnTime
 		} catch (Exception e){
-			throw new Error(e);
+		throw new Error(e);
 		}
 		
 	}
-	
-	
 	
 	
 	
@@ -223,7 +245,12 @@ public class mkEntries {
 				+":"+rand.nextInt(5)+rand.nextInt(9);
 	}
 	
-	
+	public static Time generateSQLTime(){
+		Random rand = new Random(); 
+		int millisInDay = 24*60*60*1000;
+		Time time = new Time((long)rand.nextInt(millisInDay)); 
+		return time; 
+		}
 	
 	
 	
