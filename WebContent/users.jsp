@@ -62,6 +62,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                        	
                             <%=AWS.allUsers()%>
                         </tbody>
                     </table>
@@ -69,10 +70,8 @@
                 </div>
                 
             </div>
+            
         </div>
-
-
-
     </div>
         
     <!-- /container -->

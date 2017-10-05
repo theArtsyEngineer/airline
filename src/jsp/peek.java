@@ -9,7 +9,7 @@ public class peek {
 			
 		try{
 			
-			String str = "SELECT * FROM reservation";
+			String str = "SELECT * FROM airport";
 			
 			Statement stmt = c.createStatement();
 			

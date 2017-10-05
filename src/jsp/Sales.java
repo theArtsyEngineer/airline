@@ -125,10 +125,10 @@ public class Sales {
         try {
 
             //Make a SELECT query 
-            String str = "SELECT SUM(reservation.totalFare)" +
-                         "FROM madeFor, reservation, flight" +
+            String str = "SELECT madeFor.flyNum, SUM(reservation.totalFare) " +
+                         "FROM madeFor, reservation, flight " +
                          "WHERE madeFor.flyNum = " + flyNum + " " +  
-                            "AND madeFor.resNum = reservation.resNum";
+                            "AND madeFor.resNum = reservation.resNum GROUP BY madeFor.flyNum";
 
             //Run the query against the database.
             Statement stmt = c.createStatement();
@@ -178,11 +178,7 @@ public class Sales {
         try {
 
             //Make a SELECT query 
-            String str = "SELECT SUM(reservation.totalFare) " +
-                         "FROM madeFor, reservation, flight " +
-                         "WHERE flight.stops = " + city + " " +  
-                            "AND madeFor.resNum = reservation.resNum " +
-                            "AND madeFor.flyNum = flight.flyNum";
+            String str = "SELECT flight.stops, SUM(reservation.totalFare) FROM madeFor, reservation, flight WHERE flight.stops = " + city + " AND madeFor.resNum = reservation.resNum AND madeFor.flyNum = flight.flyNum GROUP BY flight.stops";
         
             //Run the query against the database.
             Statement stmt = c.createStatement();
@@ -223,12 +219,12 @@ public class Sales {
         try {
 
             //Make a SELECT query 
-            String str = "SELECT SUM(reservation.totalFare) " + 
+            String str = "SELECT systemUser.firstname, systemUser.lastname, SUM(reservation.totalFare) " + 
                          "FROM reservation, systemUser, createRes, customer " +
                          "WHERE systemUser.firstName = " + first + " " + 
                             "AND systemUser.lastName = " + last + " " + 
                             "AND systemUser.email IN (customer.email) " +
-                            "AND systemUser.email IN (createRes.email)";
+                            "AND systemUser.email IN (createRes.email) GROUP BY systemUser.lastName";
 
             //Run the query against the database.
             Statement stmt = c.createStatement();

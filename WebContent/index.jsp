@@ -52,10 +52,52 @@ java.text.SimpleDateFormat, java.util.Date
 		</nav>
 
 		<div class="container">
-			<h3>Welcome,
+			<h3 class="text-center">Welcome,
 				<%= session.getAttribute(Template.username) %>
 			</h3>
+			<hr>
+			
+			<!-- Popular Flights -->
+			<!-- Active Flights -->
+                    <div class="row">
+                        <div class="col-xs-4 col-xs-offset-4 panel panel-default">
+                            <div class="panel-body active-flights">
+                                <h3 class="text-center">Popular Flights</h3>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Flight</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>
+                                                <%=FlightController.activeFlights(0)%>
+                                            </td>
+                                        </tr>
 
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>
+                                                <%=FlightController.activeFlights(1)%>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td>
+                                                <%=FlightController.activeFlights(2)%>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+			
+			
 			<!-- Search Flights -->
 			<h3 class="text-center">Flights Listing</h3>
 
@@ -64,7 +106,6 @@ java.text.SimpleDateFormat, java.util.Date
 					<table class="table panel panel-default">
 						<thead>
 							<tr>
-								<th>Airline</th>
 								<th>Flight Num</th>
 								<th>Stops</th>
 								<th>Seats</th>

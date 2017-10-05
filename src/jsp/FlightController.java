@@ -187,7 +187,7 @@ public class FlightController {
 
 			while (rs.next()) {
 
-				list = list + "<tr><td>N/A</td>";
+				
 
 				for (int i = 1; i <= colNum; i++) {
 					colVal = rs.getString(i);
@@ -273,11 +273,7 @@ public class FlightController {
 		try {
 
 			//Make a SELECT query 
-			String str = "SELECT c.email " + 
-						 "FROM createRes c, flight f, madeFor m " + 
-						 "WHERE m.flyNum = " + flyNum + " " +
-							 "AND c.resNum = m.resNum " + 
-							 "AND m.flyNum = f.flyNum";
+			String str = "SELECT c.email FROM createRes c, flight f, madeFor m WHERE m.flyNum = " + flyNum + " AND c.resNum = m.resNum AND m.flyNum = f.flyNum";
 
 			//Run the query against the database.
 			Statement stmt = c.createStatement();
@@ -292,8 +288,6 @@ public class FlightController {
 			String colName = "";
 
 			while (rs.next()) {
-
-				list = list + "<tr><td>N/A</td>";
 
 				for (int i = 1; i <= colNum; i++) {
 					colVal = rs.getString(i);

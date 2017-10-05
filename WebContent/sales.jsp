@@ -4,7 +4,7 @@
 
         <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
         <html>
-
+		
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -171,11 +171,10 @@
                                         <h3>Revenue by Customer</h3>
 	                                        <form class="form-inline pull-right" method="post" action="sales.jsp">
 			                                	<div class="form-group">
-												<input type="text" class="form-control" id="customer" name="customer_first" placeholder="Enter Customer First Name" >
-												<input type="text" class="form-control" id="customer" name="customer_last" placeholder="Enter Customer Las Name" >
-												
-											</div>
-											<button type="submit" class="btn btn-primary" name="customer" value="submit5">Select</button>
+													<input type="text" class="form-control" id="customer" name="customer_first" placeholder="First Name" >
+													<input type="text" class="form-control" id="customer" name="customer_last" placeholder="Last Name" >
+												</div>
+											<button type="submit" class="btn btn-primary" name="customer" value="submit9">Select</button>
                             				</form>
                                         <table class="table">
                                             <thead>
@@ -188,8 +187,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-												<%if(request.getParameter("submit5") != null){%>
-													<%=Sales.custRev(request.getParameter("customer_first"), request.getParameter("customer_last")) %>
+												<%if(request.getParameter("customer_first") != null){%>
+													<%=Sales.custRev(request.getParameter("customer_first"), request.getParameter("customer_last"))%>
 												<%}%>
                                             </tbody>
                                         </table>

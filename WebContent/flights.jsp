@@ -128,12 +128,10 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Airline</th>
                                             <th>Flight Num</th>
                                             <th>Stops</th>
                                             <th>Seats</th>
                                             <th>Fare</th>
-                                            <th>Days of Week</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -156,8 +154,10 @@
                                             <th>Stops</th>
                                             <th>Seats</th>
                                             <th>Fare</th>
+                                            <th>Adv Purchase</th>
                                             <th>Days of Week</th>
-                                            <th>Airline</th>
+                                  			<th>Stay Time</th>
+                                  			<th>Airline</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -179,8 +179,10 @@
                                             <th>Stops</th>
                                             <th>Seats</th>
                                             <th>Fare</th>
+                                            <th>Adv Purchase</th>
                                             <th>Days of Week</th>
-                                            <th>Airline</th>
+                                  			<th>Stay Time</th>
+                                  			<th>Airline</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -202,8 +204,10 @@
                                             <th>Stops</th>
                                             <th>Seats</th>
                                             <th>Fare</th>
+                                            <th>Adv Purchase</th>
                                             <th>Days of Week</th>
-                                            <th>Airline</th>
+                                  			<th>Stay Time</th>
+                                  			<th>Airline</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -225,8 +229,10 @@
                                             <th>Stops</th>
                                             <th>Seats</th>
                                             <th>Fare</th>
+                                            <th>Adv Purchase</th>
                                             <th>Days of Week</th>
-                                            <th>Airline</th>
+                                  			<th>Stay Time</th>
+                                  			<th>Airline</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -236,6 +242,34 @@
                             </div>
                         </div>
                     </div>
+                    
+                   <div class="row">
+                        <div class="col-xs-12 panel panel-default">
+                            <div class="panel-body active-flights">
+                                <h2>Customers on Flight</h2>
+                                <form class="form-inline pull-right" method="post" action="flights.jsp">
+                                <div class="form-group">
+									<input type="text" class="form-control" id="num" name="num" placeholder="Enter Flight Num" >
+								</div>
+								
+								<button type="submit" class="btn btn-primary" name="submit" value="submit7">Select</button>
+                            </form>
+                                <table class="table">
+                                    
+                                    <tbody>
+                                    	<%if(request.getParameter("num") != null){%>
+											<%=FlightController.custOnFlight(Integer.parseInt(request.getParameter("num")))%>
+										<%}%>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    
+                    </div>
+                    
                     <!-- /container -->
             </body>
 
