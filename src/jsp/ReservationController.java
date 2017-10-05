@@ -6,6 +6,60 @@ import java.util.Random;
 
 public class ReservationController {
 	
+	//Reservations by Email
+    public static String reservationsEmail(String email) {
+
+        Connection c = AWS.connect();
+
+        try {
+
+            //Make a SELECT query 
+			String str = "SELECT r.resNum, r.passengers,r.legs, r.bookingFee, r.totalFare, r.fareRestrictions, r.customerRep, r.resDate, r.flyDate "
+				+ "FROM reservation r, createRes c "
+				+ "WHERE c.email   = '" + email + "'"
+				+ " AND c.resNum   =   r.resNum";
+            
+            Statement stmt = c.createStatement();
+
+            ResultSet rs = stmt.executeQuery(str);
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int colNum = rsmd.getColumnCount();
+
+            String list = "";
+            String colVal = "";
+            String colName = "";
+
+            while (rs.next()) {
+
+                
+
+                for (int i = 1; i <= colNum; i++) {
+                    colVal = rs.getString(i);
+
+                    colName = rsmd.getColumnName(i);
+
+                    if (colName.equals("advancePurchase") || colName.equals("lengthOfStay")) {
+
+                    } else {
+                        list = list + "<td>" + colVal + "</td>";
+                    }
+
+                }
+
+                list = list + "</tr>";
+            }
+
+            AWS.close(c);
+
+            return list;
+
+        } catch (Exception e) {
+            throw new Error(e);
+        }
+
+    }
+    
     //Reservations by Flight Num
     public static String reservationsNum(int num) {
 
