@@ -85,7 +85,7 @@
                             <table class="table">
                             <thead>
                             <%if(request.getParameter("email") != null){%>
-								<h2><%= request.getParameter("email") %>'s Reservations</h2>
+								<h3><%= request.getParameter("email") %>'s Reservations</h3>
 							<%}%>
 							<tr>
 								<th>Airline</th>

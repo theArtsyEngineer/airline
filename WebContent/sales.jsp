@@ -54,9 +54,9 @@
                                     <div class="panel-body">
                                         
                                         <form class="form-inline pull-right" method="post" action="sales.jsp">
-                                        <div class="form-group">
-                                            <label for="month">Select Month:</label>
-                                            <select class="form-control" id="month" name="month">
+                                        	<div class="form-group">
+                                            	<label for="month">Select Month:</label>
+                                            	<select class="form-control" id="month" name="month">
                                             		  <option></option>
                                                       <option value="01">January</option>
                                                       <option value="02">February</option>
@@ -70,10 +70,11 @@
                                                       <option value="10">October</option>
                                                       <option value="11">November</option>
                                                       <option value="12">December</option>
-                                           </select>
-                                           <button type="submit" class="btn btn-primary" name="choose" value="submit">Select</button>
-                                        </div>
+                                           		</select>
+                                           		<button type="submit" class="btn btn-primary" name="choose" value="submit">Select</button>
+                                        	</div>
                                         </form>
+                                        
                                         <table class="table">
                                             <thead>
                                     			<%if(request.getParameter("month") != null){%>
@@ -100,31 +101,8 @@
                                 </div>
                             </div>
 
-                            <!--Sales Averages-->
-                            <div class="row">
-                                <div class="col-xs-12 panel panel-default">
-                                    <div class="panel-body">
-                                        <h3>Averages</h3>
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Reservation Number</th>
-                                                    <th>Booking Fee</th>
-                                                    <th>Total Fare</th>
-                                                    <th>Customer Rep</th>
-                                                    <th>Fare Restrictions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <!--Revenue-->
+                            <!--Revenue By Flight-->
                             <div class="row">
                                 <div class="col-xs-12 panel panel-default">
                                     <div class="panel-body">
@@ -133,7 +111,7 @@
 			                                	<div class="form-group">
 												<input type="text" class="form-control" id="flight" name="flight" placeholder="Enter flight number" >
 											</div>
-											<button type="submit" class="btn btn-primary" name="flightSubmit" value="submit">Select</button>
+											<button type="submit" class="btn btn-primary" name="flightSubmit" value="submit3">Select</button>
                             				</form>
                                         <table class="table">
                                             <thead>
@@ -154,11 +132,18 @@
                                     </div>
                                 </div>
                             </div>
-
+							
+							<!--Revenue By City-->
                             <div class="row">
                                 <div class="col-xs-12 panel panel-default">
                                     <div class="panel-body">
                                         <h3>Revenue by City</h3>
+	                                        <form class="form-inline pull-right" method="post" action="sales.jsp">
+			                                	<div class="form-group">
+												<input type="text" class="form-control" id="city" name="city" placeholder="Enter city" >
+											</div>
+											<button type="submit" class="btn btn-primary" name="city" value="submit4">Select</button>
+                            				</form>
                                         <table class="table">
                                             <thead>
                                                 <tr>
@@ -170,7 +155,42 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+												<%if(request.getParameter("city") != null){%>
+													<%=Sales.flightRev(Integer.parseInt(request.getParameter("city"))) %>
+												<%}%>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Revenue By Customer-->
+                            <div class="row">
+                                <div class="col-xs-12 panel panel-default">
+                                    <div class="panel-body">
+                                        <h3>Revenue by Customer</h3>
+	                                        <form class="form-inline pull-right" method="post" action="sales.jsp">
+			                                	<div class="form-group">
+												<input type="text" class="form-control" id="customer" name="customer_first" placeholder="Enter Customer First Name" >
+												<input type="text" class="form-control" id="customer" name="customer_last" placeholder="Enter Customer Las Name" >
+												
+											</div>
+											<button type="submit" class="btn btn-primary" name="customer" value="submit5">Select</button>
+                            				</form>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Reservation Number</th>
+                                                    <th>Booking Fee</th>
+                                                    <th>Total Fare</th>
+                                                    <th>Customer Rep</th>
+                                                    <th>Fare Restrictions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+												<%if(request.getParameter("submit5") != null){%>
+													<%=Sales.custRev(request.getParameter("customer_first"), request.getParameter("customer_last")) %>
+												<%}%>
                                             </tbody>
                                         </table>
                                     </div>

@@ -24,7 +24,6 @@ public class Template {
 		}
 		
 		//Navbar Links
-		String account = "<li><a href=\"customerAccount.jsp\">Profile</a></li>";
 		String reservations = "<li><a href=\"myReserv.jsp\">My Reservations</a></li>";
 		
 		String signedIn = "<li><p class=\"navbar-text\">Signed in as " + user + "</p></li>";
@@ -35,10 +34,10 @@ public class Template {
 			String reserve = "<li><a href=\"reservations.jsp\" class=\"navbar-link\">Reservations</a></li>";
 			String flights = "<li><a href=\"flights.jsp\" class=\"navbar-link\">Flights</a></li>";
 			String users = "<li><a href=\"users.jsp\" class=\"navbar-link\">Users</a></li>";
-			return "<ul class=\"nav navbar-nav\">" + reservations + account + sales + reserve + flights + users + "</ul>" + "<ul class=\"nav navbar-nav navbar-right\">" + signedIn + logout + "</ul>";
+			return "<ul class=\"nav navbar-nav\">" + reservations + sales + reserve + flights + users + "</ul>" + "<ul class=\"nav navbar-nav navbar-right\">" + signedIn + logout + "</ul>";
 		}
 		
-		return "<ul class=\"nav navbar-nav\">" + reservations + account + "</ul>" + "<ul class=\"nav navbar-nav navbar-right\">" + signedIn + logout + "</ul>";	
+		return "<ul class=\"nav navbar-nav\">" + reservations + "</ul>" + "<ul class=\"nav navbar-nav navbar-right\">" + signedIn + logout + "</ul>";	
 		
 	}
 
