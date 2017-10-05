@@ -23,19 +23,25 @@ public class Template {
 			return "<a href=\"login.jsp\" role=\"button\" class=\"navbar-link btn btn-primary navbar-btn navbar-right\">Log In/Register</a>";
 		}
 		
-		String welcome = "<li><p class=\"navbar-text navbar-right\">Signed in as " + user + ":</p></li>";
-		String account = "<li><a href=\"customerAccount.jsp\" class=\"navbar-link\"><span>Profile</span></a></li>";
-		String reservations = "<li><a href=\"customerReservations.jsp\" class=\"navbar-link\"><span>My Reservations</span></a></li>";
-		String logout = "<li><a href=\"logout.jsp\" class=\"navbar-link btn btn-primary navbar-btn\">Log Out</a></li>";
+		//Navbar Links
+		String account = "<li><a href=\"customerAccount.jsp\">Profile</a></li>";
+		String reservations = "<li><a href=\"myReserv.jsp\">My Reservations</a></li>";
 		
-		if(user.equals("nate")){
-			String admin = "<p class=\"navbar-text navbar-right\"><a href=\"customerAccount.jsp\" class=\"navbar-link\">Admin Dashboard</a></p>";
-			return logout + admin + reservations + account + welcome;
+		String signedIn = "<li><p class=\"navbar-text\">Signed in as " + user + "</p></li>";
+		String logout = "<li><button type=\"button\" class=\"btn btn-success navbar-btn\"><a href=\"logout.jsp\">Log Out</a></button></li>";
+		
+		if(user.equals("natelad") || user.equals("Anthony")){
+			String sales = "<li><a href=\"sales.jsp\" class=\"navbar-link\">Sales</a></li>";
+			String reserve = "<li><a href=\"reservations.jsp\" class=\"navbar-link\">Reservations</a></li>";
+			String flights = "<li><a href=\"flights.jsp\" class=\"navbar-link\">Flights</a></li>";
+			String users = "<li><a href=\"users.jsp\" class=\"navbar-link\">Users</a></li>";
+			return "<ul class=\"nav navbar-nav\">" + reservations + account + sales + reserve + flights + users + "</ul>" + "<ul class=\"nav navbar-nav navbar-right\">" + signedIn + logout + "</ul>";
 		}
 		
-		return welcome + logout + reservations + account;	
+		return "<ul class=\"nav navbar-nav\">" + reservations + account + "</ul>" + "<ul class=\"nav navbar-nav navbar-right\">" + signedIn + logout + "</ul>";	
 		
 	}
 
 	public static final String username = "user";
+	public static final String email = "email";
 }
