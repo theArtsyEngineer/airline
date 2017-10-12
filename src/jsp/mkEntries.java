@@ -72,7 +72,7 @@ public class mkEntries {
 		Random rand = new Random();
 
 		String[] addresses = {"St", "Rd", "Prk", "Ave"};
-		String[] states = {"NY", "NJ", "VA", "TX", "WA"};
+		String[] states = {"CA","NY", "NJ", "VA", "TX", "WA"};
 		
 		//add new users
 		for(int i = 0; i < numUsers; i++){
@@ -83,20 +83,23 @@ public class mkEntries {
 			
 			String user = first.charAt(0)+last;
 			
+			//get city 
+			
+			
 			//create system user 
 			try {
 				PreparedStatement ps = c.prepareStatement("INSERT INTO systemUser(user, password, email, telephone, firstName, lastName, city, zipcode, address, state) "
 														+ "VALUES (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, user); //user
-				ps.setString(2, ""+rand.nextInt(999999)); //password
+				ps.setString(2, ""+rand.nextInt(9999)); //password
 				ps.setString(3, first.charAt(0)+last+"@email.com"); //email
-				ps.setString(4, ""+rand.nextInt(9999999)); //telephone
+				ps.setString(4, ""+rand.nextInt(10)+rand.nextInt(10)+rand.nextInt(10)+"-"+rand.nextInt(10)+rand.nextInt(10)+rand.nextInt(10)+"-"+rand.nextInt(10)+rand.nextInt(10)+rand.nextInt(10)+rand.nextInt(10)); //telephone
 				ps.setString(5, first); //firstName
 				ps.setString(6, last); //lastName
-				ps.setString(7, "city"+rand.nextInt(99999)); //city
-				ps.setString(8, ""+rand.nextInt(99999)); //zipcode
-				ps.setString(9, (rand.nextInt(999)+1)+" NewStreet " + addresses[rand.nextInt(3)]); //address
-				ps.setString(10, states[rand.nextInt(4)]); //state
+				ps.setString(7, "randomcity"+rand.nextInt(999)); //city
+				ps.setString(8, ""+rand.nextInt(10)+rand.nextInt(10)+rand.nextInt(10)+rand.nextInt(10)+rand.nextInt(10)); //zipcode
+				ps.setString(9, (rand.nextInt(1000)+1)+" NewStreet " + addresses[rand.nextInt(3)]); //address
+				ps.setString(10, states[rand.nextInt(7)]); //state
 				
 				ps.execute();
 				ps.close();
@@ -115,8 +118,8 @@ public class mkEntries {
 							c.prepareStatement("INSERT INTO customer(creditCardNum, accountNum, accountCreationDate, preferences, email) "
 							+ "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 					
-					ps.setInt(1, rand.nextInt(999999999)); //creditCardNum
-					ps.setInt(2, rand.nextInt(9999999)); //accountNum
+					ps.setInt(1, rand.nextInt(999999999)+100000000); //creditCardNum
+					ps.setInt(2, rand.nextInt(9999999)+1000000); //accountNum
 					
 					Random random = new Random();
 					int minDay = (int) LocalDate.of(1990, 1, 1).toEpochDay();
@@ -143,7 +146,7 @@ public class mkEntries {
 					PreparedStatement ps = 
 							c.prepareStatement("INSERT INTO employee(jobRole, hourlyRate, startDate, ssn, email) "
 							+ "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-					ps.setInt(1, rand.nextInt(999999999)); //jobRole
+					ps.setInt(1, rand.nextInt(999)); //jobRole
 					ps.setFloat(2, rand.nextFloat() * (100.00f - 7.50f) + 7.50f); //hourlyRate
 
 					Random random = new Random();
@@ -157,7 +160,7 @@ public class mkEntries {
 					
 					ps.setDate(3, (java.sql.Date)d); //accountCreationDate
 					
-					ps.setString(4, "" + rand.nextInt(999999999)); //ssn
+					ps.setString(4, "" + rand.nextInt(999999999)+100000000); //ssn
 					ps.setString(5, first.charAt(0)+last+"@email.com"); //email
 
 					ps.execute();
@@ -181,7 +184,7 @@ public class mkEntries {
 			PreparedStatement ps = 
 					c.prepareStatement("INSERT INTO flight(flyNum, stops, numberOfSeats, fare, advancePurchase, daysOfTheWeek, lengthOfStay)"
 					+ "VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-			flyNum = rand.nextInt(999999999);
+			flyNum = rand.nextInt(99999);
 			ps.setInt(1, flyNum); //flyNum
 			ps.setInt(2, rand.nextInt(4) + 1); //stops
 			ps.setInt(3, rand.nextInt(60) + 20); //numberOfSeats	
@@ -225,7 +228,7 @@ public class mkEntries {
 		}
 		
 		//select airlines in operatedBy table '7:00:00 PM'
-		String[] airports = {"LGA", "NWA", "PSA", "TBA"}; 
+		String[] airports = {"LC","YM","ASE","BHM","CLD","DAB","EWR","LHD"}; 
 		Time arrivalTime = generateSQLTime();
 		Time departureTime = generateSQLTime();
 		int arriveOnTime = 1;
@@ -236,7 +239,7 @@ public class mkEntries {
 		+ "VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 		ps.setTime(1, arrivalTime);//arrivalTime
 		ps.setTime(2, departureTime);//departureTime
-		ps.setString(3, airports[rand.nextInt(3)]);//apid
+		ps.setString(3, airports[rand.nextInt(7)]);//apid
 		ps.setInt(4, flyNum);//flyNum
 		ps.setInt(5, arriveOnTime);//arriveOnTime
 		ps.setInt(6, departOnTime);//departOnTime
@@ -293,7 +296,7 @@ public class mkEntries {
 			PreparedStatement ps = 
 					c.prepareStatement("INSERT INTO reservation(resNum, passengers, bookingFee, totalFare, legs, flyDate, customerRep, fareRestrictions, resDate, passNum)"
 					+ "VALUES (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-			resNum = rand.nextInt(999999999);
+			resNum = rand.nextInt(999999);
 			ps.setInt(1, resNum); //resNum
 			ps.setString(2, "passengers ok"); //passengers
 			ps.setFloat(3, rand.nextFloat() * (100.00f - 7.50f) + 7.50f); //bookingFee
