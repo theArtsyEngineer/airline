@@ -24,7 +24,7 @@ public class mkEntries {
 	int numUsers = 1;
 	boolean isCustomer = false; 
 	
-	for(int i = 0; i < 1; i++){generateUser(c, firstNames, lastNames, numUsers, isCustomer);}
+	//for(int i = 0; i < 1; i++){generateUser(c, firstNames, lastNames, numUsers, isCustomer);}
 	//for(int i = 0; i < 10; i++){generateFlight(c);}
 	//for(int i = 0; i < 10; i++){generateFlight(c);}
 	//generateFlight(c);
@@ -99,7 +99,7 @@ public class mkEntries {
 				ps.setString(7, "randomcity"+rand.nextInt(999)); //city
 				ps.setString(8, ""+rand.nextInt(10)+rand.nextInt(10)+rand.nextInt(10)+rand.nextInt(10)+rand.nextInt(10)); //zipcode
 				ps.setString(9, (rand.nextInt(1000)+1)+" NewStreet " + addresses[rand.nextInt(3)]); //address
-				ps.setString(10, states[rand.nextInt(7)]); //state
+				ps.setString(10, states[rand.nextInt(6)]); //state
 				
 				ps.execute();
 				ps.close();
@@ -160,7 +160,7 @@ public class mkEntries {
 					
 					ps.setDate(3, (java.sql.Date)d); //accountCreationDate
 					
-					ps.setString(4, "" + rand.nextInt(999999999)+100000000); //ssn
+					ps.setString(4, "" + rand.nextInt(999999999)); //ssn
 					ps.setString(5, first.charAt(0)+last+"@email.com"); //email
 
 					ps.execute();
@@ -195,8 +195,8 @@ public class mkEntries {
 			
 			String[] days = {"M", "T", "W", "Th", "F", "S", "Su"};
 			String daysOfTheWeek = ""; 
-			for(int i = 0; i < rand.nextInt(6); i++){
-				daysOfTheWeek += days[rand.nextInt(6)]+" ";
+			for(int i = 0; i < rand.nextInt(7); i++){
+				daysOfTheWeek += days[rand.nextInt(7)]+" ";
 			}
 			ps.setString(6, daysOfTheWeek); //daysOfTheWeek	
 			
@@ -217,7 +217,7 @@ public class mkEntries {
 			PreparedStatement ps = 
 					c.prepareStatement("INSERT INTO operatedBy(alid, flyNum)"
 							+ "VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, airlines[rand.nextInt(3)]);
+			ps.setString(1, airlines[rand.nextInt(4)]);
 			ps.setInt(2, flyNum);
 			
 			ps.execute();
@@ -227,24 +227,25 @@ public class mkEntries {
 			throw new Error(e);
 		}
 		
-		//select airlines in operatedBy table '7:00:00 PM'
-		String[] airports = {"LC","YM","ASE","BHM","CLD","DAB","EWR","LHD"}; 
+		//insert into stopsAt table '7:00:00 PM'
+		String[] airports = {"LC", "YM", "ASE", "BHM", "CLD", "DAB", "EWR", "LHD"}; 
 		Time arrivalTime = generateSQLTime();
 		Time departureTime = generateSQLTime();
 		int arriveOnTime = 1;
 		int departOnTime = 1;
-		try { 
-		PreparedStatement ps = 
-		c.prepareStatement("INSERT INTO stopsAt(arrivalTime, departureTime, apid, flyNum, arriveOnTime, departOnTime, order)"
-		+ "VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+		int orderNum = 0;
+		try {
+			PreparedStatement ps = 
+				c.prepareStatement("INSERT INTO stopsAt(arrivalTime, departureTime, apid, flyNum, arriveOnTime, departOnTime, orderNum)"
+						+ "VALUES (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 		ps.setTime(1, arrivalTime);//arrivalTime
 		ps.setTime(2, departureTime);//departureTime
-		ps.setString(3, airports[rand.nextInt(7)]);//apid
+		ps.setString(3, airports[rand.nextInt(8)]);//apid
 		ps.setInt(4, flyNum);//flyNum
 		ps.setInt(5, arriveOnTime);//arriveOnTime
 		ps.setInt(6, departOnTime);//departOnTime
-		ps.setInt(7, 0);//order
-
+		ps.setInt(7, orderNum);//orderNum
+	
 		ps.execute();
 		ps.close();
 		
