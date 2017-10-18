@@ -170,8 +170,9 @@ public class FlightController {
 		try {
 
 			//Make a SELECT query 
-			String str = "SELECT *" + 
-						 "FROM flight";
+			String str = "SELECT * , a.city, a.country " + 
+						 "FROM  flight f, airport a, stopsAt s " +
+						 "WHERE s.apid = a.apid AND s.flyNum = f.flyNum";
 
 			//Run the query against the database.
 			Statement stmt = c.createStatement();
@@ -314,4 +315,98 @@ public class FlightController {
 		}
 
 	}
+	
+	//Show All International Flights
+		public static String inter() {
+
+			Connection c = AWS.connect();
+
+			try {
+
+				//Make a SELECT query 
+				String str = "SELECT * FROM flight f, stopsAt s, airport a WHERE s.flyNum = f.flyNum AND a.apid AND a.country !='USA'";
+
+				//Run the query against the database.
+				Statement stmt = c.createStatement();
+
+				ResultSet rs = stmt.executeQuery(str);
+
+				ResultSetMetaData rsmd = rs.getMetaData();
+				int colNum = rsmd.getColumnCount();
+
+				String list = "";
+				String colVal = "";
+				String colName = "";
+
+				while (rs.next()) {
+
+					for (int i = 1; i <= colNum; i++) {
+						colVal = rs.getString(i);
+
+						colName = rsmd.getColumnName(i);
+
+						
+						list = list + "<td>" + colVal + "</td>";
+
+					}
+
+					list = list + "</tr>";
+				}
+
+				AWS.close(c);
+
+				return list;
+
+			} catch (Exception e) {
+				throw new Error(e);
+			}
+
+		}
+		
+				//Show All Domestic Flights
+				public static String domest() {
+
+					Connection c = AWS.connect();
+
+					try {
+
+						//Make a SELECT query 
+						String str = "SELECT * FROM flight f WHERE f.flyNum NOT IN (SELECT f.flyNum FROM flight f, stopsAt s, airport a WHERE s.flyNum = f.flyNum AND a.apid AND a.country !='USA')";
+
+						//Run the query against the database.
+						Statement stmt = c.createStatement();
+
+						ResultSet rs = stmt.executeQuery(str);
+
+						ResultSetMetaData rsmd = rs.getMetaData();
+						int colNum = rsmd.getColumnCount();
+
+						String list = "";
+						String colVal = "";
+						String colName = "";
+
+						while (rs.next()) {
+
+							for (int i = 1; i <= colNum; i++) {
+								colVal = rs.getString(i);
+
+								colName = rsmd.getColumnName(i);
+
+								
+								list = list + "<td>" + colVal + "</td>";
+
+							}
+
+							list = list + "</tr>";
+						}
+
+						AWS.close(c);
+
+						return list;
+
+					} catch (Exception e) {
+						throw new Error(e);
+					}
+
+				}
 }

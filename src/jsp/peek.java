@@ -9,8 +9,10 @@ public class peek {
 			
 		try{
 			
-			String str = "SELECT * FROM airport";
-			
+			String str = "SELECT f.flyNum FROM flight f "
+					+ "WHERE f.flyNum NOT IN (SELECT f.flyNum FROM flight f, stopsAt s, airport a "
+					+ "WHERE s.flyNum = f.flyNum AND a.apid AND a.country != 'USA')";
+		
 			Statement stmt = c.createStatement();
 			
 			ResultSet rs = stmt.executeQuery(str);
@@ -39,8 +41,5 @@ public class peek {
 			throw new Error(e);
 		}
 		
-		
-		
-
 	}
 }

@@ -184,7 +184,7 @@ public class ReservationController {
       
       //SELECT Flight Info
       try {
-    	  String str = "SELECT fare FROM flight WHERE flight.flyNum = flyNum";
+    	  String str = "SELECT fare FROM flight WHERE flight.flyNum =" + flyNum;
     	  Statement stmt = c.createStatement();
     	  
     	  ResultSet rs = stmt.executeQuery(str);

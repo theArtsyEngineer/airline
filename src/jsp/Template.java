@@ -29,7 +29,7 @@ public class Template {
 		String signedIn = "<li><p class=\"navbar-text\">Signed in as " + user + "</p></li>";
 		String logout = "<li><button type=\"button\" class=\"btn btn-success navbar-btn\"><a href=\"logout.jsp\">Log Out</a></button></li>";
 		
-		if(user.equals("natelad") || user.equals("Anthony")){
+		if(user.equals("Nate") || user.equals("Anthony")){
 			String sales = "<li><a href=\"sales.jsp\" class=\"navbar-link\">Sales</a></li>";
 			String reserve = "<li><a href=\"reservations.jsp\" class=\"navbar-link\">Reservations</a></li>";
 			String flights = "<li><a href=\"flights.jsp\" class=\"navbar-link\">Flights</a></li>";

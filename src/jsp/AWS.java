@@ -96,7 +96,7 @@ public class AWS {
 					if (colName.equals("firstName") || colName.equals("lastName")) {
 						listPart = listPart + "<td>" + colVal + "</td>";
 					} else if (colName.equals("telephone")) {
-						telephone = "<td>" + colVal + "</td>";
+						
 					} else if (colName.equals("email")) {
 						email = "<td>" + colVal + "</td>";
 					}

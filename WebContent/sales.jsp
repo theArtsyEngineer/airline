@@ -142,7 +142,7 @@
 			                                	<div class="form-group">
 												<input type="text" class="form-control" id="city" name="city" placeholder="Enter city" >
 											</div>
-											<button type="submit" class="btn btn-primary" name="city" value="submit4">Select</button>
+											<button type="submit" class="btn btn-primary" name="citySubmit" value="submit4">Select</button>
                             				</form>
                                         <table class="table">
                                             <thead>
@@ -174,7 +174,7 @@
 													<input type="text" class="form-control" id="customer" name="customer_first" placeholder="First Name" >
 													<input type="text" class="form-control" id="customer" name="customer_last" placeholder="Last Name" >
 												</div>
-											<button type="submit" class="btn btn-primary" name="customer" value="submit9">Select</button>
+											<button type="submit" class="btn btn-primary" name="customerSubmit" value="submit9">Select</button>
                             				</form>
                                         <table class="table">
                                             <thead>
@@ -187,7 +187,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-												<%if(request.getParameter("customer_first") != null){%>
+												<%if(request.getParameter("customerSubmit") != null){%>
 													<%=Sales.custRev(request.getParameter("customer_first"), request.getParameter("customer_last"))%>
 												<%}%>
                                             </tbody>

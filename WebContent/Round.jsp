@@ -98,40 +98,17 @@ java.text.SimpleDateFormat, java.util.Date
 			
 			
 			<!-- Domestic Flights -->
-			<h3 class="text-center">Domestic/International Flights Listing</h3>
-
-			<div class="row">
-				<div class="col-xs-12">
-					<table class="table panel panel-default">
-						<thead>
-							<tr>
-								<th>Flight Num</th>
-								<th>Stops</th>
-								<th>Seats</th>
-								<th>Fare</th>
-								<th>Days of Week</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							<%= FlightController.allFlights()%>
-						</tbody>
-					</table>
-				</div>
-			</div>
+			<h3 class="text-center"> Reserve Round-Trip</h3>
 			
 
 
-			<!-- Make Reservation -->
-			<h3 class="text-center">Make Reservation</h3>
+			<!-- Make Forward Reservation -->
+			<h3 class="text-center">Make Departure Reservation</h3>
 			
 			<div class="row">
 				<div class="row">
 				<div class="col-xs-12">
-					<div class="btn-group btn-group-justified">
-						<a href="Round.jsp" class="btn btn-primary">Round-Trip</a>
-						<a href="#" class="btn btn-primary">Multi-City</a>
-					</div>
+
 				</div>
 				<hr>
 			</div>
@@ -161,12 +138,55 @@ java.text.SimpleDateFormat, java.util.Date
 								<input type="text" class="pref" id="pref" name="pref">
 							</div>
 							
-							<button type="submit" class="btn btn-default btn-block" value="submit" name="submit">Make Reservation</button>
+							<button type="submit" class="btn btn-default btn-block" value="submit" name="submit">Make Departure Reservation</button>
 						
 				</form>
 			</div>
 
 		</div>
+		
+		<!-- Make Return Reservation -->
+			<h3 class="text-center">Make Return Reservation</h3>
+			
+			<div class="row">
+				<div class="row">
+				<div class="col-xs-12">
+
+				</div>
+				<hr>
+			</div>
+				<form class="form-inline" method="post" action="index.jsp">
+							<div class="form-group">
+								<label for="flightnum">Flight Number:</label>
+								<input type="text" class="flightnum" id="flightnum" name="flightnum">
+							</div>
+							
+							<div class="form-group">
+								<label for="passengers">Passengers:</label>
+								<input type="text" class="passengers" id="passengers" name="passengers">
+							</div>
+							
+							<div class="form-group">
+								<label for="fDate">Fly Date:</label>
+								<input type="text" class="fDate" id="fDate" name="fDate">
+							</div>
+							
+							<div class="form-group">
+								<label for="Legs">Legs:</label>
+								<input type="text" class="legs" id="legs" name="legs">
+							</div>
+							
+							<div class="form-group">
+								<label for="pref">Preferences:</label>
+								<input type="text" class="pref" id="pref" name="pref">
+							</div>
+							
+							<button type="submit" class="btn btn-default btn-block" value="submit" name="submit">Make Return Reservation</button>
+						
+				</form>
+			</div>
+
+		
 
 
 	</body>
